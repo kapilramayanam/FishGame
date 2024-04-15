@@ -2,6 +2,9 @@ package com.example.demo;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.layout.Pane;
@@ -15,7 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Polygon;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import java.io.InputStream;
 import java.util.Collections;
 import java.util.ArrayList;
@@ -27,13 +31,19 @@ public class HeyThatsMyFishGame extends Application {
     private static final double HEX_SIZE = 50;
     private static final double BOARD_PADDING = 50;
     private static final double GAP = 5;
+    private static int playerScore;
+    private static int opponentScore;
 
     private List<Integer> fishTiles;
 
     @Override
     public void start(Stage primaryStage) {
+        TextField b = new TextField("Player Score: " + playerScore);
+        TextField opponentB = new TextField("Opponent Score: " + opponentScore);
         Pane root = new Pane();
-
+        HBox scores = new HBox();
+        scores.getChildren().addAll(b,opponentB);
+        root.getChildren().add(scores);
         // Initialize the fish distribution based on the game's rules
         initializeFishTiles();
 
@@ -56,9 +66,12 @@ public class HeyThatsMyFishGame extends Application {
             }
         }
 
-        Scene scene = new Scene(root, 970, 970); // Adjust the size of the scene as needed
+        Scene scene = new Scene(root, 1000, 800); // Adjust the size of the scene as needed
         primaryStage.setTitle("Hey That's My Fish!");
         primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(event -> {
+            primaryStage.close();
+        });
         primaryStage.show();
     }
 
@@ -113,4 +126,6 @@ public class HeyThatsMyFishGame extends Application {
             return imageView;
         }
     }
+
+
 }
